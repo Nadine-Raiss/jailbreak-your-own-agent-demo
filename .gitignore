@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+.agent_id
+scan-*.json
+scan.json
+.env
