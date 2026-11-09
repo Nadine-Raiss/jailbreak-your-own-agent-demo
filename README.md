@@ -44,6 +44,7 @@ git clone https://github.com/Nadine-Raiss/jailbreak-your-own-agent-demo.git jail
 cd jailbreak-lab
 Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
 . .\setup.ps1          # leading dot + space keeps the venv active
+.\.venv\Scripts\Activate.ps1   # make sure the venv is active: your prompt must now start with (.venv)
 $env:PROJECT_ENDPOINT="https://<resource>.services.ai.azure.com/api/projects/<project>"
 $env:MODEL_DEPLOYMENT_NAME="gpt-5.4-mini"
 ```
@@ -64,9 +65,19 @@ Your laptop can have **two Pythons**: the system one, and the lab's private envi
 
 - ✅ Your prompt starts with **`(.venv)`**, e.g. `(.venv) PS C:\...\jailbreak-lab>`: you're good.
 - ❌ No `(.venv)`: `python` is the system Python and the lab packages aren't there.
+
+**✅ The fix (Windows), in the jailbreak-lab folder:**
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+Check that the prompt now starts with `(.venv)`, then run the scripts with `python` as usual. Do it again in every new terminal you open (and re-set `$env:PROJECT_ENDPOINT` / `$env:MODEL_DEPLOYMENT_NAME` there too). On macOS / Linux: `source .venv/bin/activate`.
+
 - Python must be **3.10 to 3.13** (`python --version`). On a newer version, install 3.12 and use `py -3.12 -m venv .venv`.
 
-**Bullet-proof option (Windows), no activation needed:** call the environment's Python directly.
+**Alternative, no activation needed:** call the environment's Python directly.
 
 ```powershell
 python -m venv .venv
@@ -154,7 +165,7 @@ ASR is scored by an AI judge and varies a little between runs, so treat small sw
 | `KeyError: 'PROJECT_ENDPOINT'` | Variables only live in the current terminal: set them again |
 | `FileNotFoundError: travel-policy.md` | Run the scripts from the `jailbreak-lab` folder |
 | `No agent found` | Run `python build_agent.py` first |
-| `No module named 'azure.ai.evaluation'` (or `azure.ai.agents`) | Your environment isn't active: the prompt must start with `(.venv)`. Run `. .\setup.ps1` (Windows) or `source setup.sh` (Mac), or `pip install -r requirements.txt` |
+| `No module named 'azure.ai.evaluation'` (or `azure.ai.agents`) | Your environment isn't active (no `(.venv)` in the prompt). Windows: `Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` then `.\.venv\Scripts\Activate.ps1`. Mac: `source .venv/bin/activate`. Still missing? `pip install -r requirements.txt` |
 | The terminal shows `>>` and waits | A quote didn't close (often a curly quote from copy-paste). Press **Ctrl+C** and retype the command with plain `"` quotes |
 
 ## Cleanup
