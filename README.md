@@ -7,6 +7,12 @@ Build a deliberately vulnerable HR agent in Microsoft Foundry, break it, measure
 
 > ⚠️ Lab use only. Attack your **own** lab agent with synthetic data. `send_email` never sends anything: it only prints to your terminal.
 
+## Lab map
+
+![Lab map: your laptop, the Microsoft Foundry project you create, and how you harden and prove it](docs/lab-map.png)
+
+Red arrows = the attack path, cyan = defence and measurement.
+
 ## What's in the box
 
 | File | What it does |
